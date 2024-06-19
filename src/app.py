@@ -17,7 +17,7 @@ def create_app() -> FastAPI:
     app = FastAPI(
         title='Olive shop',
         docs_url=None,
-        openapi_url='/openapi.json',
+        openapi_url='/olive/openapi.json',
         root_path='/olive'
         # swagger_ui_parameters={'deepLinking': False, 'persistAuthorization': True},
     )

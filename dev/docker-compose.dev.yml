@@ -1,0 +1,56 @@
+version: '2.2'
+
+services:
+  olive-api:
+    build: ..
+    command: bash -c "uvicorn app:app_ --host 0.0.0.0 --port 8022 --reload --workers 1 --forwarded-allow-ips='*' --proxy-headers"
+    container_name: olive-api
+    restart: unless-stopped
+    ports:
+      - '8022:8022'
+    depends_on:
+      - olive-db
+    environment:
+      - POETRY_GROUP='main'
+    volumes:
+      - ../src:/code
+    env_file:
+      - ../.env.dev
+
+  olive-db:
+    build:
+      context: ./dockerfiles/postgresql
+    restart: unless-stopped
+    container_name: olive-db
+    cpu_count: 1
+    cpu_percent: 50
+    mem_limit: 512m
+    ports:
+      - '5433:5432'
+    volumes:
+      - olive-data:/var/lib/postgresql/data
+    env_file:
+      - ../.env.dev
+    healthcheck:
+      test: [ "CMD", "pg_isready", "-d", "olive", "-U", "postgres", "-h", "localhost" ]
+      timeout: 10s
+      retries: 5
+
+#  sheduler:
+#    build: ..
+#    command: bash -c "python schedule_task.py"
+#    container_name: schedule_task
+#    restart: unless-stopped
+#    environment:
+#      - POETRY_GROUP=main
+#    env_file:
+#      - ../.env.dev
+
+volumes:
+  olive-data:
+
+#networks:
+#  my_network:
+#    driver: bridge
+#    driver_opts:
+#      com.docker.network.driver.mtu: 1450

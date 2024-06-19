@@ -1,0 +1,45 @@
+{% extends "layout.html" %}
+{% block content %}
+{% set name, job, photo = get_user(request) %}
+<div class="card mb-3" style="max-width: 540px;">
+  <div class="row g-0">
+    <div class="col-md-4">
+      {% if photo == "no" %}
+      {% else %}
+      <img src="{{ photo.replace('/code/storage/', 'http://95.163.228.212/storage/') }}" class="img-fluid rounded-start" alt="...">
+      {% endif %}
+    </div>
+    <div class="col-md-8">
+      <div class="card-body">
+        <h5 class="card-title">{{ name }}</h5>
+        <p class="card-text">{{ job }}</p>
+      </div>
+    </div>
+  </div>
+</div>
+{% set birthdays = get_birthdays() %}
+<div class="container-fluid">
+  <table class="table caption-top">
+    <caption>Ближайшие дни рождения</caption>
+    <thead>
+      <tr>
+        <th scope="col">Фото</th>
+        <th scope="col">ФИО</th>
+        <th scope="col">Дата рождения</th>
+        <th scope="col">Дней до дня рождения</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for user in birthdays %}
+      {% set name, photo, birthday, days = user %}
+      <tr>
+        <td><img src="{{ photo.replace('/code/storage/', 'http://95.163.228.212/storage/') }}" class="img-fluid rounded-start" alt="..."></td>
+        <td>{{ name }}</td>
+        <td>{{ birthday }}</td>
+        <td>{{ days }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

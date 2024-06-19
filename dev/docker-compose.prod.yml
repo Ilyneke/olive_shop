@@ -1,0 +1,58 @@
+version: '2.2'
+
+services:
+  api:
+    build:
+      context: ..
+      dockerfile: Dockerfile.prod
+    command: bash -c "gunicorn app:app_ --workers 1 --worker-class worker.SolovkiUvicornWorker --bind 0.0.0.0:8022"
+    container_name: coin_api
+    restart: unless-stopped
+    ports:
+      - '8022:8022'
+    depends_on:
+      - db
+    environment:
+      - POETRY_GROUP='main'
+    volumes:
+      - ../src:/code
+    env_file:
+      - ../.env
+
+  db:
+    build:
+      context: ./dockerfiles/postgresql
+    restart: unless-stopped
+    container_name: db
+    cpu_count: 1
+    cpu_percent: 50
+    mem_limit: 512m
+    volumes:
+      - solovki-data:/var/lib/postgresql/data
+    env_file:
+      - ../.env
+    healthcheck:
+      test: [ "CMD", "pg_isready", "-d", "solovki", "-U", "postgres", "-h", "localhost" ]
+      timeout: 10s
+      retries: 5
+
+#  sheduler:
+#    build:
+#      context: ..
+#      dockerfile: Dockerfile.prod
+#    command: bash -c "python schedule_task.py"
+#    container_name: schedule_task
+#    restart: unless-stopped
+#    environment:
+#      - POETRY_GROUP=main
+#    env_file:
+#      - ../.env
+
+volumes:
+  coin-data:
+
+#networks:
+#  my_network:
+#    driver: bridge
+#    driver_opts:
+#      com.docker.network.driver.mtu: 1450

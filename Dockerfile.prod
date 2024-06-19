@@ -9,15 +9,13 @@ ENV PYTHONUNBUFFERED=1 \
     PYTHONDONTWRITEBYTECODE=1
 
 RUN set -ex \
-    && apt-get update \
-    && apt-get install libzbar-dev ffmpeg libsm6 libxext6 -y
+    && apt-get update
 COPY pyproject.toml poetry.lock ./
 ARG POETRY_GROUP=main
 RUN set -ex \
     && pip install --upgrade pip \
     && pip install "poetry==$POETRY_VERSION" \
-    && pip install setuptools==69.1.0 \ \
-    && pip install torch --no-cache-dir
+    && pip install setuptools==69.1.0 \
     && poetry config virtualenvs.create false \
     && poetry install --no-root --no-interaction $(bash -c "if [ $POETRY_GROUP == 'dev' ]; then echo '--dev'; elif [ $POETRY_GROUP == 'web' ]; then echo '--only web';else echo '--only main'; fi}") \
     && rm -rf /root/.cache

@@ -18,13 +18,13 @@ def create_app() -> FastAPI:
         title='Olive shop',
         docs_url=None,
         openapi_url='/openapi.json',
-        root_path='/olive/api'
+        root_path='/olive'
         # swagger_ui_parameters={'deepLinking': False, 'persistAuthorization': True},
     )
 
     app.mount("/olive/static", StaticFiles(directory="static"), name="static")
 
-    @app.get("/docs", include_in_schema=False)
+    @app.get("/api/docs", include_in_schema=False)
     async def custom_swagger_ui_html():
         return get_swagger_ui_html(
             openapi_url=app.openapi_url,

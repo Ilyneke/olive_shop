@@ -1,6 +1,7 @@
 import uvicorn
 from fastapi import FastAPI, Request
 from fastapi.openapi.docs import get_swagger_ui_html, get_swagger_ui_oauth2_redirect_html
+from fastapi.openapi.utils import get_openapi
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import JSONResponse
 from starlette.middleware.cors import CORSMiddleware
@@ -17,7 +18,7 @@ def create_app() -> FastAPI:
     app = FastAPI(
         title='Olive shop',
         docs_url=None,
-        openapi_url='/olive/api/openapi.json',
+        openapi_url='/olive/openapi.json',
         root_path='/olive'
         # swagger_ui_parameters={'deepLinking': False, 'persistAuthorization': True},
     )
@@ -34,6 +35,25 @@ def create_app() -> FastAPI:
             swagger_css_url="/olive/static/swagger-ui.css",
             swagger_ui_parameters={'deepLinking': False, 'persistAuthorization': True},
         )
+
+    @app.get("/openapi.json", include_in_schema=False)
+    async def access_openapi():
+        openapi = get_openapi(
+            title=app.title,
+            version=app.version,
+            description=app.description,
+            routes=app.routes,
+            tags=app.openapi_tags,
+        )
+
+        monkey_patched_openapi = {
+            key: value for key, value in openapi.items() if key != "paths"
+        }
+        monkey_patched_openapi["paths"] = {}
+        for key, value in openapi["paths"].items():
+            monkey_patched_openapi["paths"][app.root_path + key] = value
+
+        return monkey_patched_openapi
 
     @app.get(app.swagger_ui_oauth2_redirect_url, include_in_schema=False)
     async def swagger_ui_redirect():

@@ -5,7 +5,7 @@ services:
     build:
       context: ..
       dockerfile: Dockerfile.prod
-    command: bash -c "gunicorn app:app_ --workers 1 --worker-class worker.OliveUvicornWorker --bind 0.0.0.0:8022"
+    command: bash -c "gunicorn app:app_ --workers 1 --worker-class worker.OliveUvicornWorker --bind 0.0.0.0:8022 --forwarded-allow-ips='*' --proxy-headers"
     container_name: olive-api
     restart: unless-stopped
     ports:

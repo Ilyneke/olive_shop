@@ -23,7 +23,7 @@ class Products(UUIDBaseMixin, DatetimeBaseMixin, Base):
     description = Column(String, nullable=False, doc='Product description')
     price = Column(DECIMAL(precision=5, scale=2), nullable=False, default=1)
     discount = Column(Integer, nullable=False, default=0)
-    image = Column(ImageType, nullable=False, doc='Picture of product')
+    image = Column(ImageType, nullable=True, doc='Picture of product')
     variety_id: Mapped[UUID] = mapped_column(ForeignKey("varieties.id"), nullable=True)
     variety: Mapped["Varieties"] = relationship(back_populates="products")
 

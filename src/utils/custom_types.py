@@ -1,6 +1,7 @@
 from typing import Any
 
 from fastapi_storages.integrations.sqlalchemy import FileType as _FileType
+from fastapi_storages.integrations.sqlalchemy import ImageType as _ImageType
 from fastapi_storages import FileSystemStorage
 
 from sqladmin import ModelView as _ModelView
@@ -12,6 +13,11 @@ storage = FileSystemStorage(path=STORAGE_DIR)
 
 
 class FileType(_FileType):
+    def __init__(self, *args: Any, **kwargs: Any) -> None:
+        super().__init__(storage=storage, *args, **kwargs)
+
+
+class ImageType(_ImageType):
     def __init__(self, *args: Any, **kwargs: Any) -> None:
         super().__init__(storage=storage, *args, **kwargs)
 

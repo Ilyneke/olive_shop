@@ -22,4 +22,4 @@ RUN set -ex \
 
 WORKDIR /code
 
-COPY ${SOURCES_DIR} /code/
+# COPY ${SOURCES_DIR} /code/

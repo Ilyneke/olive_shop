@@ -1,5 +1,5 @@
-{% extends "base.html" %}
-{% from '_macros.html' import display_menu %}
+{% extends "sqladmin/base.html" %}
+{% from 'sqladmin/_macros.html' import display_menu %}
 {% block body %}
 <div class="wrapper">
   <aside class="navbar navbar-expand-lg navbar-vertical navbar-expand-md navbar-dark">
@@ -7,10 +7,9 @@
       <h1 class="navbar-brand navbar-brand-autodark">
         <a href="{{ url_for('admin:index') }}">
           {% if admin.logo_url %}
-          <img src="{{ admin.logo_url }}" width="64" height="64" alt="HR" class="navbar-brand-image" />
+          <img src="{{ admin.logo_url }}" width="64" height="64" alt="Admin" class="navbar-brand-image" />
           {% else %}
-<!--          <h3>{{ admin.title }}</h3>-->
-          Главная страница
+          <h3>{{ admin.title }}</h3>
           {% endif %}
         </a>
       </h1>
@@ -26,7 +25,7 @@
       {% if admin.authentication_backend %}
       <a href="{{ request.url_for('admin:logout') }}" class="btn btn-secondary btn-icon">
         <i class="fa fa-sign-out"></i>
-        <span>Выход</span>
+        <span>Logout</span>
       </a>
       {% endif %}
     </div>

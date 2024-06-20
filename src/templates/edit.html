@@ -1,4 +1,4 @@
-{% extends "layout.html" %}
+{% extends "sqladmin/layout.html" %}
 {% block content %}
 <div class="col-12">
   <div class="card">
@@ -26,6 +26,9 @@
               {% for error in field.errors %}
               <div class="invalid-feedback">{{ error }}</div>
               {% endfor %}
+              {% if field.description %}
+              <small class="text-muted">{{ field.description }}</small>
+              {% endif %}
             </div>
           </div>
           {% endfor %}
@@ -33,17 +36,19 @@
         <div class="row">
           <div class="col-md-2">
             <a href="{{ url_for('admin:list', identity=model_view.identity) }}" class="btn">
-              Отмена
+              Cancel
             </a>
           </div>
           <div class="col-md-6">
             <div class="btn-group flex-wrap" data-toggle="buttons">
               <input type="submit" name="save" value="Save" class="btn">
-<!--              <input type="submit" name="save" value="Сохранить и продолжить редактирование" class="btn">-->
-              {% if model_view.save_as %}
-              <input type="submit" name="save" value="Сохранить как новый" class="btn">
-              {% else %}
-<!--              <input type="submit" name="save" value="Сохранить и добавить еще" class="btn">-->
+              <input type="submit" name="save" value="Save and continue editing" class="btn">
+              {% if model_view.can_create %}
+                {% if model_view.save_as %}
+                <input type="submit" name="save" value="Save as new" class="btn">
+                {% else %}
+                <input type="submit" name="save" value="Save and add another" class="btn">
+                {% endif %}
               {% endif %}
             </div>
           </div>

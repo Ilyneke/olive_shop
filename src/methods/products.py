@@ -21,6 +21,6 @@ async def get_products_method(session: AsyncSession) -> list:
             'name': product.name,
             'description': product.description,
             'price': float(product.price),
-            'image': product.image.replace('/code', f'{API_DOMAIN}/olive/')
+            'image': product.image.replace('/code', f'{API_DOMAIN}/olive')
         } for product in products
     ]

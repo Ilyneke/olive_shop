@@ -24,7 +24,7 @@ class ProductOut(BaseModel):
     image: str
 
 
-@products_router.get('/api/products', tags=['Products'], summary='Get products', response_model=ProductOut)
+@products_router.get('/api/products', tags=['Products'], summary='Get products', response_model=list[ProductOut])
 async def get_products(
     state: str | None = None,
     session: AsyncSession = Depends(get_async_session),  # noqa: B008

@@ -19,7 +19,7 @@ db:
 prod:
 	$(DOCKER_COMPOSE_CMD_PROD) up --force-recreate --build -d
 
-frapi:
+restart_api:
     $(DOCKER_COMPOSE_CMD_PROD) up --force-recreate olive-api -d
 
 makemigrations:

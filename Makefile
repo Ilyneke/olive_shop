@@ -19,9 +19,6 @@ db:
 prod:
 	$(DOCKER_COMPOSE_CMD_PROD) up --force-recreate --build -d
 
-restart_api:
-    $(DOCKER_COMPOSE_CMD_PROD) up --force-recreate olive-api -d
-
 makemigrations:
 	$(DOCKER_COMPOSE_CMD_DEV) exec wordle_bot alembic revision --autogenerate
 

@@ -27,11 +27,11 @@ function calcCartPriceAndDelivery() {
 	}
 
 	// Указываем стоимость доставки
-	if (priceTotal >= 600) {
+	if (priceTotal >= 50) {
 		deliveryCost.classList.add('free');
-		deliveryCost.innerText = 'бесплатно';
+		deliveryCost.innerText = 'free';
 	} else {
 		deliveryCost.classList.remove('free');
-		deliveryCost.innerText = '250 ₽';
+		deliveryCost.innerText = '$30';
 	}
 }

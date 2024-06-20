@@ -17,12 +17,24 @@ img {
 .header {
 	padding-top: 50px;
 	padding-bottom: 50px;
+	background-color: #FFFADC;
+	height: 20vh;
 }
 
 .logo {
 	margin-left: auto;
 	margin-right: auto;
 }
+
+.background {
+    box-sizing: border-box;
+    padding: 20px;
+    background-image: url('../img/olives-612x612.jpg');
+    background-repeat: repeat;
+    background-size: 306px;
+    min-height: 80vh;
+}
+
 
 .site-title {
 	font-size: 3.5rem;

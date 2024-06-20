@@ -37,7 +37,6 @@ function renderProducts(productsArray) {
 									<!-- // Счетчик -->
 
 									<div class="price">
-										<div class="price__weight">${item.weight}g</div>
 										<div class="price__currency">${item.price} $</div>
 									</div>
 								</div>

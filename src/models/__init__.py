@@ -1,3 +1,3 @@
 from .products import Products
-from .availability import Availability
-from .shops import Shops
+from .varieties import Varieties
+# from .shops import Shops

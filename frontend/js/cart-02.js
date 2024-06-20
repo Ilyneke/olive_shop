@@ -5,7 +5,6 @@ const cartWrapper =  document.querySelector('.cart-wrapper');
 window.addEventListener('click', function (event) {
 	// Проверяем что клик был совершен по кнопке "Добавить в корзину"
 	if (event.target.hasAttribute('data-cart')) {
-
 		// Находим карточку с товаром, внутри котрой был совершен клик
 		const card = event.target.closest('.card');
 

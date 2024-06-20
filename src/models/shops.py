@@ -9,7 +9,7 @@ from settings.db import Base
 
 
 if typing.TYPE_CHECKING:
-    from models import Availability
+    from models import Varieties
 
 
 class Shops(UUIDBaseMixin, DatetimeBaseMixin, Base):
@@ -21,7 +21,7 @@ class Shops(UUIDBaseMixin, DatetimeBaseMixin, Base):
     city = Column(String)
     address = Column(String)
     phone = Column(BigInteger)
-    available: Mapped[list["Availability"]] = relationship(back_populates="shop")
+    available: Mapped[list["Varieties"]] = relationship(back_populates="shop")
 
     def __str__(self):
         return f'{self.state}, {self.city}, {self.address}'

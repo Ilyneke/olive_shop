@@ -11,18 +11,18 @@ class ProductsAdmin(ModelView, model=Products):  # type: ignore
     column_list = [
         Products.name,
         Products.description,
+        Products.discount,
         Products.price,
         Products.image,
+        Products.variety
     ]
     column_details_exclude_list = [
         Products.created_at,
         Products.modified_at,
-        Products.available,
     ]
     form_excluded_columns = [
         Products.created_at,
         Products.modified_at,
-        Products.available,
     ]
     page_size = 25
     page_size_options = [50, 100]

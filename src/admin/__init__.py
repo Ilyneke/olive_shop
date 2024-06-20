@@ -7,8 +7,7 @@ from sqladmin.authentication import AuthenticationBackend
 from settings.base import AUTH_TOKEN
 from utils.auth import check_auth, create_token, check_token
 from .products import ProductsAdmin
-from .availability import AvailabilityAdmin
-from .shops import ShopsAdmin
+from .variety import VarietyAdmin
 
 
 class AdminAuth(AuthenticationBackend):
@@ -37,5 +36,4 @@ def init_admin_panel(app: typing.Any, engine: typing.Any) -> None:
     )
 
     admin_views.add_view(ProductsAdmin)
-    admin_views.add_view(AvailabilityAdmin)
-    admin_views.add_view(ShopsAdmin)
+    admin_views.add_view(VarietyAdmin)

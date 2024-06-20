@@ -17,6 +17,7 @@ async def get_products_method(session: AsyncSession) -> list:
             'discount': float(product.discount),
             'discounted_price': float(product.price - product.price * product.discount / 100),
             'variety': product.variety.variety,
-            'image': product.image.replace('/code', f'{API_DOMAIN}/olive')
+            'image': product.image.replace('/code', f'{API_DOMAIN}/olive') if product.image is not None
+            else 'https://kharisov.space/olive/storage/no-image-available-icon-vector.jpg'
         } for product in sorted(products, key=lambda x: x.variety.variety)
     ]

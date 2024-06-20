@@ -3,6 +3,8 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from models import Products
 from querysets.products import get_products_qs
 
+from settings.base import API_DOMAIN
+
 
 async def insert_product(session: AsyncSession, product_instance: Products) -> None:
     """Добавление нового чека, если его еще нет в нашей системе."""
@@ -19,6 +21,6 @@ async def get_products_method(session: AsyncSession) -> list:
             'name': product.name,
             'description': product.description,
             'price': float(product.price),
-            'image': product.image
+            'image': product.image.replace('/code', f'{API_DOMAIN}/olive/')
         } for product in products
     ]

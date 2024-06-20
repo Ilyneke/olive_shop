@@ -23,7 +23,7 @@ ALGORITHM = 'HS256'
 AUTH_TOKEN = env.str('AUTH_TOKEN')
 AUTH_SALT = env.str('AUTH_SALT')
 HASH_PASSWORD = env.str('HASH_PASSWORD')
-PASSWORD = env.str('PASSWORD', 'ebanyparol')
+PASSWORD = env.str('PASSWORD', 'secret')
 # openssl rand -hex 32
 SECRET_KEY = env.str('SECRET_KEY')
 ADMIN_USERNAME = env.str('AUTH_USERNAME')

@@ -21,7 +21,7 @@ function renderProducts(productsArray) {
     productsArray.forEach(function (item) {
         const productHTML = `<div class="col-md-6">
 						<div class="card mb-4" data-id="${item.id}">
-							<img class="product-img" src="img/roll/${item.image}" alt="">
+							<img class="product-img" src="${item.image}" alt="">
 							<div class="card-body text-center">
 								<h4 class="item-title">${item.name}</h4>
 								<p><small data-items-in-box class="text-muted">${item.itemsInBox} шт.</small></p>

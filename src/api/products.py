@@ -17,7 +17,10 @@ class ProductOut(BaseModel):
     id: str
     name: str
     description: str
-    price: str
+    price: float
+    discount: float
+    discounted_price: float
+    variety: str
     image: str
 
 

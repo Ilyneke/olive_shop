@@ -15,7 +15,7 @@ async def get_products_method(session: AsyncSession) -> list:
             'description': product.description,
             'price': float(product.price),
             'discount': float(product.discount),
-            'discounted price': product.price - product.price * product.discount / 100,
+            'discounted_price': product.price - product.price * product.discount / 100,
             'variety': product.variety.variety,
             'image': product.image.replace('/code', f'{API_DOMAIN}/olive')
         } for product in sorted(products, key=lambda x: x.variety.variety)

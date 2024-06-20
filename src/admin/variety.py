@@ -6,7 +6,7 @@ from models import Varieties
 class VarietyAdmin(ModelView, model=Varieties):  # type: ignore
     name_plural = 'varieties'
     name = 'variety'
-    icon = 'fa-solid fa-person'
+    icon = 'fa-solid fa-layer-group'
     column_list = [
         Varieties.variety,
     ]

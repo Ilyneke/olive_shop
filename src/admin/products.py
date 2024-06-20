@@ -7,7 +7,7 @@ from models import Products
 class ProductsAdmin(ModelView, model=Products):  # type: ignore
     name_plural = 'products'
     name = 'product'
-    icon = 'fa-solid fa-person'
+    icon = 'fa-solid fa-cart-shopping'
     column_list = [
         Products.name,
         Products.description,

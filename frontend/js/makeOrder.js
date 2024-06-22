@@ -15,7 +15,7 @@ form.addEventListener('submit', function(event) {
     const totalPrice = document.querySelector('.total-price').innerText;
 
     // Вызываем функцию с данными из формы и строкой
-    myFunction(name, age, terms, currency, stringFromPage);
+    myFunction(totalPrice, currency);
 });
 
 function myFunction(totalPrice, currency) {

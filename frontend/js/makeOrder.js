@@ -20,7 +20,6 @@ form.addEventListener('submit', function(event) {
 
 function myFunction(totalPrice, currency) {
     fetch('https://kharisov.space/olive/api/payment', {
-        mode: 'CORS',
         method: 'POST',
         headers: {
             'accept': 'application/json',

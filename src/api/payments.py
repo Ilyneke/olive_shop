@@ -3,29 +3,33 @@ from __future__ import annotations
 import typing
 
 from fastapi import APIRouter, Depends
-from fastapi.responses import RedirectResponse
+from fastapi.responses import RedirectResponse, JSONResponse
 from pydantic import BaseModel
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from settings.base import API_DOMAIN
 from settings.db import get_async_session
-from utils.payments import create_payment
+from utils.payments import create_payment_youkassa, create_payment_stripe
 
 payments_router = APIRouter()
 
 
-class ProductIn(BaseModel):
+class OrderIn(BaseModel):
     price: float
     currency: str = 'USD'
-    description: str
+    description: str | None
 
 
-@payments_router.get('/api/payment', tags=['Payment'], summary='Payment', response_model=None)
+@payments_router.post('/api/payment', tags=['Payment'], summary='Payment', response_model=None)
 async def get_products(
-    data: ProductIn,
+    data: OrderIn,
 ) -> typing.Any:
-    payment = create_payment(
-        price=str(data.price), currency=data.currency, return_url=f'{API_DOMAIN}/olives-shop',
-        description=data.description
+    # payment = create_payment_youkassa(
+    #     price=str(data.price), currency=data.currency, return_url=f'{API_DOMAIN}/olives-shop',
+    #     description=data.description
+    # )
+    payment = create_payment_stripe(
+        price=str(int(data.price * 100)), currency=data.currency,
+        success_url=f'{API_DOMAIN}/olives-shop', cancel_url=f'{API_DOMAIN}/olives-shop'
     )
-    return RedirectResponse(payment.content)
+    return JSONResponse(payment)

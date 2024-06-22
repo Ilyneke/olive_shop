@@ -1,15 +1,14 @@
 from sqladmin import ModelView
 
-from models import Currencies
+from models import Varieties
 
 
-class CurrencyAdmin(ModelView, model=Currencies):  # type: ignore
+class VarietyAdmin(ModelView, model=Varieties):  # type: ignore
     name_plural = 'varieties'
     name = 'variety'
-    icon = 'fa-solid fa-coins'
+    icon = 'fa-solid fa-layer-group'
     column_list = [
-        Currencies.code,
-        Currencies.value
+        Varieties.variety,
     ]
     page_size = 25
     page_size_options = [50, 100]

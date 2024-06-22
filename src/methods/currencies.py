@@ -12,3 +12,4 @@ async def get_currency_method(session: AsyncSession, code: str) -> float | None:
 
 async def update_currency_method(session: AsyncSession, code: str, value: float) -> None:
     await session.execute(update_currency(code=code, value=value))
+    await session.commit()

@@ -11,4 +11,4 @@ def update_currency(code: str, value: float) -> select:
 
 def get_actual_currency(code: str) -> select:
     return select(Currencies)\
-        .where(and_(Currencies.code == code, datetime.now(tz=None) - Currencies.modified_at < timedelta(hours=1)))
+        .where(and_(Currencies.code == code, datetime.now(tz=None) - Currencies.modified_at < timedelta(minutes=10)))

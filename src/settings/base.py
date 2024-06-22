@@ -24,6 +24,8 @@ AUTH_TOKEN = env.str('AUTH_TOKEN')
 AUTH_SALT = env.str('AUTH_SALT')
 HASH_PASSWORD = env.str('HASH_PASSWORD')
 PASSWORD = env.str('PASSWORD', 'secret')
+SHOP_ID = env.str('SHOP_ID')
+SHOP_SECRET_KEY = env.str('SHOP_SECRET_KEY')
 # openssl rand -hex 32
 SECRET_KEY = env.str('SECRET_KEY')
 ADMIN_USERNAME = env.str('AUTH_USERNAME')

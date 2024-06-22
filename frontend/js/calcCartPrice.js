@@ -17,7 +17,7 @@ function calcCartPriceAndDelivery() {
 	});
 
 	// Отображаем цену на странице
-	totalPriceEl.innerText = priceTotal;
+	totalPriceEl.innerText = priceTotal.toFixed(2);
 
 	// Скрываем / Показываем блок со стоимостью доставки
 	if (priceTotal > 0) {

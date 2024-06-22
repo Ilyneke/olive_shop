@@ -18,7 +18,7 @@ form.addEventListener('submit', function(event) {
     myFunction(name, age, terms, currency, stringFromPage);
 });
 
-function myFunction(name, age, terms, plan, stringFromPage) {
+function myFunction(totalPrice, currency) {
     fetch('https://kharisov.space/olive/api/payment', {
         method: 'POST',
         headers: {

@@ -32,4 +32,5 @@ async def get_products(
         price=str(int(data.price * 100)), currency=data.currency,
         success_url=f'{API_DOMAIN}/olives-shop', cancel_url=f'{API_DOMAIN}/olives-shop'
     )
-    return JSONResponse(payment)
+    # return JSONResponse(payment)
+    return RedirectResponse(payment)

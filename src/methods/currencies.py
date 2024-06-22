@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from querysets.currencies import get_actual_currency, update_currency
@@ -7,6 +9,7 @@ async def get_currency_method(session: AsyncSession, code: str) -> float | None:
     smtm = await session.execute(get_actual_currency(code=code))
     currency = smtm.scalar_one_or_none()
     if currency is not None:
+        print('DATETIME NOW, CURRENCY', datetime.now(tz=None), currency.modified_at)
         return currency.value
 
 

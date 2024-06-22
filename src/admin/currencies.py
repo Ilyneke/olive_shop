@@ -4,8 +4,8 @@ from models import Currencies
 
 
 class CurrencyAdmin(ModelView, model=Currencies):  # type: ignore
-    name_plural = 'varieties'
-    name = 'variety'
+    name_plural = 'currencies'
+    name = 'currency'
     icon = 'fa-solid fa-coins'
     column_list = [
         Currencies.code,

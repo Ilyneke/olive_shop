@@ -19,7 +19,7 @@ form.addEventListener('submit', function(event) {
 });
 
 function myFunction(name, age, terms, plan, stringFromPage) {
-    fetch('http://0.0.0.0:8022/olive/api/payment', {
+    fetch('https://kharisov.space/olive/api/payment', {
         method: 'POST',
         headers: {
             'accept': 'application/json',

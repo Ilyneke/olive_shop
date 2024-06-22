@@ -1,8 +1,11 @@
-from typing import Any
+from typing import Any, Optional
 
+from fastapi_storages.base import StorageImage
 from fastapi_storages.integrations.sqlalchemy import FileType as _FileType
 from fastapi_storages.integrations.sqlalchemy import ImageType as _ImageType
 from fastapi_storages import FileSystemStorage
+from sqlalchemy.engine.interfaces import Dialect
+from PIL import Image
 
 from sqladmin import ModelView as _ModelView
 
@@ -20,6 +23,19 @@ class FileType(_FileType):
 class ImageType(_ImageType):
     def __init__(self, *args: Any, **kwargs: Any) -> None:
         super().__init__(storage=storage, *args, **kwargs)
+
+    def process_result_value(
+        self, value: Any, dialect: Dialect
+    ) -> Optional[StorageImage]:
+        if value is None:
+            return value
+        try:
+            with Image.open(self.storage.get_path(value)) as image:
+                return StorageImage(
+                    name=value, storage=self.storage, height=image.height, width=image.width
+                )
+        except BaseException as ee:
+            print('EXCEPTION:', str(ee))
 
 
 class ModelView(_ModelView):

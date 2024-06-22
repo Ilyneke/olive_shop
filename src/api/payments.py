@@ -37,6 +37,7 @@ async def get_products(
             currency = response.json()['data'][data.currency]
             data.price *= currency
             await update_currency_method(session=session, code=data.currency, value=currency)
+    print('PRICE:', int(data.price * 100))
     payment = create_payment_stripe(
         price=str(int(data.price * 100)), currency=data.currency,
         success_url=f'{API_DOMAIN}/olives-shop', cancel_url=f'{API_DOMAIN}/olives-shop'

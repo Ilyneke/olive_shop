@@ -32,9 +32,9 @@ async def get_products(
         if currency is not None:
             data.price *= currency
         else:
-            url = 'https://api.freecurrencyapi.com/v1/latest?apikey=fca_live_avvJ2CyEpUXqdAtmkti91Mqwxdb4xj56ptapm8kB'
+            url = 'https://v6.exchangerate-api.com/v6/c9d42dd579232451c017ad24/latest/USD'
             response = requests.get(url=url)
-            currency = response.json()['data'][data.currency]
+            currency = response.json()['conversion_rates'][data.currency]
             data.price *= currency
             await update_currency_method(session=session, code=data.currency, value=currency)
     payment = create_payment_stripe(

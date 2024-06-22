@@ -32,6 +32,6 @@ function myFunction(totalPrice, currency) {
         'description': 'string'
         })
     });
-    const body = res.json()
-    window.location.href = body.url
+    const body = res.json();
+    window.location.href = body.url;
 }

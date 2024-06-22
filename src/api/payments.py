@@ -25,12 +25,12 @@ class OrderIn(BaseModel):
 async def get_products(
     data: OrderIn,
 ) -> typing.Any:
-    payment = create_payment_stripe(
-        price=str(int(data.price * 100)), currency=data.currency,
-        success_url=f'{API_DOMAIN}/olives-shop', cancel_url=f'{API_DOMAIN}/olives-shop'
-    )
     if data.currency != 'USD':
         url = 'https://api.freecurrencyapi.com/v1/latest?apikey=fca_live_avvJ2CyEpUXqdAtmkti91Mqwxdb4xj56ptapm8kB'
         response = requests.get(url=url)
         data.price *= response.json()[data.currency]
+    payment = create_payment_stripe(
+        price=str(int(data.price * 100)), currency=data.currency,
+        success_url=f'{API_DOMAIN}/olives-shop', cancel_url=f'{API_DOMAIN}/olives-shop'
+    )
     return JSONResponse({'url': payment})

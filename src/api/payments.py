@@ -20,7 +20,7 @@ class OrderIn(BaseModel):
     description: str | None
 
 
-@payments_router.post('/api/payment', tags=['Payment'], summary='Payment', response_model=JSONResponse)
+@payments_router.post('/api/payment', tags=['Payment'], summary='Payment')
 async def get_products(
     data: OrderIn,
 ) -> typing.Any:

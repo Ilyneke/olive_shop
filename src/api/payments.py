@@ -33,4 +33,4 @@ async def get_products(
         success_url=f'{API_DOMAIN}/olives-shop', cancel_url=f'{API_DOMAIN}/olives-shop'
     )
     # return JSONResponse(payment)
-    return RedirectResponse(payment)
+    return RedirectResponse(payment, status_code=303)

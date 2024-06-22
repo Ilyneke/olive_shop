@@ -3,7 +3,7 @@ from __future__ import annotations
 import typing
 
 from fastapi import APIRouter, Depends
-from fastapi.responses import RedirectResponse, JSONResponse
+from fastapi.responses import JSONResponse
 from pydantic import BaseModel
 from sqlalchemy.ext.asyncio import AsyncSession
 
@@ -20,17 +20,12 @@ class OrderIn(BaseModel):
     description: str | None
 
 
-@payments_router.post('/api/payment', tags=['Payment'], summary='Payment', response_model=None)
+@payments_router.post('/api/payment', tags=['Payment'], summary='Payment', response_model=JSONResponse)
 async def get_products(
     data: OrderIn,
 ) -> typing.Any:
-    # payment = create_payment_youkassa(
-    #     price=str(data.price), currency=data.currency, return_url=f'{API_DOMAIN}/olives-shop',
-    #     description=data.description
-    # )
     payment = create_payment_stripe(
         price=str(int(data.price * 100)), currency=data.currency,
         success_url=f'{API_DOMAIN}/olives-shop', cancel_url=f'{API_DOMAIN}/olives-shop'
     )
-    # return JSONResponse(payment)
-    return RedirectResponse(payment, status_code=303)
+    return JSONResponse({'url': payment})

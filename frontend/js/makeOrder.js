@@ -19,7 +19,7 @@ form.addEventListener('submit', function(event) {
 });
 
 function myFunction(totalPrice, currency) {
-    fetch('https://kharisov.space/olive/api/payment', {
+    const res = await fetch('https://kharisov.space/olive/api/payment', {
         method: 'POST',
         redirect: 'follow',
         headers: {
@@ -32,4 +32,6 @@ function myFunction(totalPrice, currency) {
         'description': 'string'
         })
     });
+    const body = await res.json()
+    window.location.href = body.url
 }

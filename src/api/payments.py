@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import typing
+import requests
 
 from fastapi import APIRouter, Depends
 from fastapi.responses import JSONResponse
@@ -28,4 +29,8 @@ async def get_products(
         price=str(int(data.price * 100)), currency=data.currency,
         success_url=f'{API_DOMAIN}/olives-shop', cancel_url=f'{API_DOMAIN}/olives-shop'
     )
+    if data.currency != 'USD':
+        url = 'https://api.freecurrencyapi.com/v1/latest?apikey=fca_live_avvJ2CyEpUXqdAtmkti91Mqwxdb4xj56ptapm8kB'
+        response = requests.get(url=url)
+        data.price *= response.json()[data.currency]
     return JSONResponse({'url': payment})

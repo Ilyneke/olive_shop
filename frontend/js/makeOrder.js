@@ -35,5 +35,5 @@ function myFunction(totalPrice, currency) {
     .then((response) => response.json())
     .then((data) => {
         window.location.href = data.url;
-    }
+    })
 }

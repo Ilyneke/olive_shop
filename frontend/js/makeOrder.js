@@ -21,6 +21,7 @@ form.addEventListener('submit', function(event) {
 function myFunction(totalPrice, currency) {
     fetch('https://kharisov.space/olive/api/payment', {
         method: 'POST',
+        redirect: 'follow',
         headers: {
             'accept': 'application/json',
             'Content-Type': 'application/json'

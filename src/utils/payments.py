@@ -1,41 +1,24 @@
-import uuid
-import requests
+import asyncio
 
 import stripe
 
-from settings.base import SHOP_ID, SHOP_SECRET_KEY
+
+async def check_payment_stripe(_id: str):
+    while True:
+        payment = await stripe.checkout.Session.retrieve_async(id=_id)
+        if payment.status == 'complete':
+            print(f'{payment.id}, {payment.amount_total} completed!')
+        if payment.status != 'open':
+            break
+        await asyncio.sleep(delay=60)
 
 
-def create_payment_youkassa(price: str, currency: str, return_url, description: str):
-    yookassa_api_endpoint = 'https://api.yookassa.ru/v3/payments'
-    unic_id = uuid.uuid4()
-    payment = requests.post(
-        url=yookassa_api_endpoint,
-        auth=(SHOP_ID, SHOP_SECRET_KEY),
-        headers={
-            'Idempotence-Key': str(unic_id),
-            'Content-Type': 'application/json',
-        },
-        json={
-            "amount": {
-                "value": price,
-                "currency": currency
-            },
-            "confirmation": {
-                "type": "redirect",
-                "return_url": return_url
-            },
-            "capture": True,
-            "description": description
-        }
-    )
-    return payment
-
-
-def create_payment_stripe(price: str, currency: str, success_url: str, cancel_url: str) -> str:
-    """returns a payment utl"""
+async def create_payment_stripe(
+        price: str, currency: str, success_url: str, cancel_url: str
+) -> stripe.checkout.Session:
+    """returns a payment"""
     stripe.api_key = 'sk_test_51PUU0CJ9MetCi25fM4NUOeKk6rjajvevF0Q7KR5QGVayguvWpGOFajhzve1iKGhF57Dz640siQpjev133XT1PQid00jORsny05'
-    session = stripe.checkout.Session.create(
+    session = await stripe.checkout.Session.create_async(
         line_items=[{
             'price_data': {
                 'currency': currency,
@@ -50,5 +33,4 @@ def create_payment_stripe(price: str, currency: str, success_url: str, cancel_ur
         success_url=success_url,
         cancel_url=cancel_url,
     )
-
-    return session.url
+    return session

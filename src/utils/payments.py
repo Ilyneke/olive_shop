@@ -2,12 +2,21 @@ import asyncio
 
 import stripe
 
+from methods.orders import insert_order_method
+from models import Orders
+
 
 async def check_payment_stripe(_id: str):
     while True:
         payment = await stripe.checkout.Session.retrieve_async(id=_id)
         if payment.status == 'complete':
-            print(f'{payment.id}, {payment.amount_total} completed!, additional data: {payment.metadata}')
+            phone_number = payment.metadata.pop('phone')
+            order = Orders()
+            order.data = payment.metadata
+            order.phone = phone_number
+            order.email = payment.customer_email
+            order.total_sum = payment.amount_total
+            await insert_order_method(order_instance=order)
         if payment.status != 'open':
             break
         await asyncio.sleep(delay=60)

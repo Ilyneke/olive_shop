@@ -13,6 +13,7 @@ class Orders(UUIDBaseMixin, DatetimeBaseMixin, Base):
     __tablename__ = 'orders'
 
     total_sum = Column(Integer, nullable=False, doc='Total sum')
+    currency = Column(String, nullable=False, doc='Currency')
     data = Column(JSONB, nullable=False, doc='list of products (id, count)')
     phone = Column(BigInteger, nullable=False, doc='Phone number')
     email = Column(String, nullable=True, doc='Email')

@@ -20,6 +20,7 @@ class OrderIn(BaseModel):
     price: float
     currency: str = 'USD'
     description: str | None
+    data_cart: list
 
 
 @payments_router.post('/api/payment', tags=['Payment'], summary='Payment')
@@ -28,6 +29,7 @@ async def get_products(
     background_tasks: BackgroundTasks,
     session: AsyncSession = Depends(get_async_session),  # noqa: B008
 ) -> typing.Any:
+    print('data_cart:', data.data_cart)
     if data.currency != 'USD':
         currency = await get_currency_method(session=session, code=data.currency)
         if currency is not None:

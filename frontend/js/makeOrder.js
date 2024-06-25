@@ -5,7 +5,7 @@ const form = document.getElementById('order-form');
 form.addEventListener('submit', function(event) {
     event.preventDefault(); // Предотвращаем перезагрузку страницы
 
-    // Получаем данные из формы
+// Получаем данные из формы
 //    const name = form.querySelector('[name="name"]').value;
 //    const age = form.querySelector('[name="age"]').value;
 //    const terms = form.querySelector('[name="terms"]').checked;
@@ -14,11 +14,22 @@ form.addEventListener('submit', function(event) {
     // Получаем строку из страницы
     const totalPrice = document.querySelector('.total-price').innerText;
 
+    // Получить товары
+    const dataCart = [];
+    const cartItems = document.querySelectorAll('.cart-item')
+    cartItems.forEach((item) => {
+        const cartItem = {
+            id: item.getAttribute('data-id'),
+            count: item.querySelector('.items__current').innerText
+        }
+        dataCart.push(cartItem)
+    })
+
     // Вызываем функцию с данными из формы и строкой
-    myFunction(totalPrice, currency);
+    myFunction(totalPrice, currency, dataCart);
 });
 
-function myFunction(totalPrice, currency) {
+function myFunction(totalPrice, currency, dataCart) {
     const res = fetch('https://kharisov.space/olive/api/payment', {
         method: 'POST',
         redirect: 'follow',
@@ -29,7 +40,8 @@ function myFunction(totalPrice, currency) {
         body: JSON.stringify({
         'price': totalPrice,
         'currency': currency,
-        'description': 'string'
+        'description': 'string',
+        'data_cart': dataCart
         })
     })
     .then((response) => response.json())

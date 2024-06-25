@@ -9,13 +9,13 @@ from models import Orders
 async def check_payment_stripe(_id: str):
     while True:
         payment = await stripe.checkout.Session.retrieve_async(id=_id)
-        print(str(payment.__dict__))
         if payment.status == 'complete':
+            print(str(payment.__dict__))
             phone_number = payment.metadata.pop('phone')
             order = Orders()
             order.data = payment.metadata
             order.phone = int(phone_number)
-            order.email = payment.customer_email
+            order.email = payment.customer_details.email
             order.total_sum = payment.amount_total
             await insert_order_method(order_instance=order)
         if payment.status != 'open':

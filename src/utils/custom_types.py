@@ -25,7 +25,10 @@ class FileType(_FileType):
             return value
         if len(value.file.read(1)) != 1:
             return None
-        print(str(value.__dict__))
+
+        if value.size is None:
+            return value.filename
+
         file = StorageFile(name=value.filename, storage=self.storage)
         file.write(file=value.file)
 

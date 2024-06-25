@@ -29,7 +29,9 @@ async def get_products(
     background_tasks: BackgroundTasks,
     session: AsyncSession = Depends(get_async_session),  # noqa: B008
 ) -> typing.Any:
-    data_cart = dict(**x for x in data.data_cart)
+    data_cart = dict()
+    for elem in data.data_cart:
+        data_cart.update(elem)
     if data.currency != 'USD':
         currency = await get_currency_method(session=session, code=data.currency)
         if currency is not None:

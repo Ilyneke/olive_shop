@@ -7,7 +7,7 @@ from sqlalchemy.dialects.postgresql import UUID
 
 from models._absctract import UUIDBaseMixin, DatetimeBaseMixin
 from settings.db import Base
-from utils.custom_types import FileType, ImageType
+from utils.custom_types import FileType
 
 
 if typing.TYPE_CHECKING:

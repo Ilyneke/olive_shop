@@ -18,7 +18,16 @@ async function getProducts() {
 }
 
 function renderProducts(productsArray) {
+    let price = null;
     productsArray.forEach(function (item) {
+        if (item.discount === 0) {
+            price = `<div class="price__currency">${item.price} $</div>`;
+        } else {
+            price = `<span class="price__old">${item.price} $</span>
+                    <span class="sale-badge">${item.discount}% OFF</span>
+                    <div class="price__currency">${item.discounted_price} $</div>`;
+        };
+
         const productHTML = `<div class="col-md-6">
 						<div class="card mb-4" data-id="${item.id}">
 							<img class="product-img" src="${item.image}" alt="">
@@ -36,9 +45,7 @@ function renderProducts(productsArray) {
 									</div>
 									<!-- // Счетчик -->
 
-									<div class="price">
-										<div class="price__currency">${item.price} $</div>
-									</div>
+									<div class="price">${price}</div>
 								</div>
 
 								<button data-cart type="button" class="btn btn-block btn-outline-warning">

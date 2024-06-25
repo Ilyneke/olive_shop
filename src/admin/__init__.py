@@ -9,6 +9,7 @@ from utils.auth import check_auth, create_token, check_token
 from .products import ProductsAdmin
 from .variety import VarietyAdmin
 from .currencies import CurrencyAdmin
+from .orders import OrdersAdmin
 
 
 class AdminAuth(AuthenticationBackend):
@@ -39,3 +40,4 @@ def init_admin_panel(app: typing.Any, engine: typing.Any) -> None:
     admin_views.add_view(ProductsAdmin)
     admin_views.add_view(VarietyAdmin)
     admin_views.add_view(CurrencyAdmin)
+    admin_views.add_view(OrdersAdmin)

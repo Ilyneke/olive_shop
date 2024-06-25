@@ -6,6 +6,7 @@ form.addEventListener('submit', function(event) {
     event.preventDefault(); // Предотвращаем перезагрузку страницы
 
     // Получаем данные из формы
+    const phoneNumber = form.querySelector('[name="phone"]').value;
     const currency = form.querySelector('[name="currency"]').value;
 
     // Получаем строку из страницы
@@ -38,7 +39,8 @@ function myFunction(totalPrice, currency, dataCart) {
         'price': totalPrice,
         'currency': currency,
         'description': 'string',
-        'data_cart': dataCart
+        'data_cart': dataCart,
+        'phone_number': phoneNumber,
         })
     })
     .then((response) => response.json())

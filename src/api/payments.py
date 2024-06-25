@@ -21,6 +21,7 @@ class OrderIn(BaseModel):
     currency: str = 'USD'
     description: str | None
     data_cart: list[dict]
+    phone_number: int
 
 
 @payments_router.post('/api/payment', tags=['Payment'], summary='Payment')
@@ -29,7 +30,7 @@ async def get_products(
     background_tasks: BackgroundTasks,
     session: AsyncSession = Depends(get_async_session),  # noqa: B008
 ) -> typing.Any:
-    data_cart = dict()
+    data_cart = {"phone": data.phone_number}
     for elem in data.data_cart:
         data_cart.update(elem)
     if data.currency != 'USD':

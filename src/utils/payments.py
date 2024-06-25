@@ -9,6 +9,7 @@ from models import Orders
 async def check_payment_stripe(_id: str):
     while True:
         payment = await stripe.checkout.Session.retrieve_async(id=_id)
+        print(str(payment.__dict__))
         if payment.status == 'complete':
             phone_number = payment.metadata.pop('phone')
             order = Orders()

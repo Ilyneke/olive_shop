@@ -22,7 +22,7 @@ async def get_products_method(session: AsyncSession) -> list:
             'description': product.description,
             'price': float(product.price),
             'discount': float(product.discount),
-            'discounted_price': float(product.price - product.price * product.discount / 100),
+            'discounted_price': round(float(product.price - product.price * product.discount / 100), 2),
             'variety': product.variety.variety,
             'image': get_image_url(product.image),
         } for product in sorted(products, key=lambda x: x.variety.variety)

@@ -24,10 +24,10 @@ form.addEventListener('submit', function(event) {
     })
 
     // Вызываем функцию с данными из формы и строкой
-    myFunction(totalPrice, currency, dataCart);
+    myFunction(totalPrice, currency, dataCart, phoneNumber);
 });
 
-function myFunction(totalPrice, currency, dataCart) {
+function myFunction(totalPrice, currency, dataCart, phoneNumber) {
     const res = fetch('https://kharisov.space/olive/api/payment', {
         method: 'POST',
         redirect: 'follow',

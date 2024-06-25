@@ -5,10 +5,7 @@ const form = document.getElementById('order-form');
 form.addEventListener('submit', function(event) {
     event.preventDefault(); // Предотвращаем перезагрузку страницы
 
-// Получаем данные из формы
-//    const name = form.querySelector('[name="name"]').value;
-//    const age = form.querySelector('[name="age"]').value;
-//    const terms = form.querySelector('[name="terms"]').checked;
+    // Получаем данные из формы
     const currency = form.querySelector('[name="currency"]').value;
 
     // Получаем строку из страницы

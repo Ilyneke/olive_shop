@@ -20,7 +20,7 @@ class OrderIn(BaseModel):
     price: float
     currency: str = 'USD'
     description: str | None
-    data_cart: list
+    data_cart: list[dict]
 
 
 @payments_router.post('/api/payment', tags=['Payment'], summary='Payment')
@@ -29,7 +29,7 @@ async def get_products(
     background_tasks: BackgroundTasks,
     session: AsyncSession = Depends(get_async_session),  # noqa: B008
 ) -> typing.Any:
-    print('data_cart:', data.data_cart)
+    data_cart = dict(**x for x in data.data_cart)
     if data.currency != 'USD':
         currency = await get_currency_method(session=session, code=data.currency)
         if currency is not None:
@@ -42,7 +42,8 @@ async def get_products(
             await update_currency_method(session=session, code=data.currency, value=currency)
     payment = await create_payment_stripe(
         price=str(int(data.price * 100)), currency=data.currency,
-        success_url=f'{API_DOMAIN}/olives-shop', cancel_url=f'{API_DOMAIN}/olives-shop'
+        success_url=f'{API_DOMAIN}/olives-shop', cancel_url=f'{API_DOMAIN}/olives-shop',
+        metadata=data_cart,
     )
     background_tasks.add_task(check_payment_stripe, payment.id)
     return JSONResponse({'url': payment.url})

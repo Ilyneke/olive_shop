@@ -7,14 +7,14 @@ async def check_payment_stripe(_id: str):
     while True:
         payment = await stripe.checkout.Session.retrieve_async(id=_id)
         if payment.status == 'complete':
-            print(f'{payment.id}, {payment.amount_total} completed!')
+            print(f'{payment.id}, {payment.amount_total} completed!, additional data: {payment.metadata}')
         if payment.status != 'open':
             break
         await asyncio.sleep(delay=60)
 
 
 async def create_payment_stripe(
-        price: str, currency: str, success_url: str, cancel_url: str
+        price: str, currency: str, success_url: str, cancel_url: str, metadata: dict
 ) -> stripe.checkout.Session:
     """returns a payment"""
     stripe.api_key = 'sk_test_51PUU0CJ9MetCi25fM4NUOeKk6rjajvevF0Q7KR5QGVayguvWpGOFajhzve1iKGhF57Dz640siQpjev133XT1PQid00jORsny05'
@@ -29,6 +29,7 @@ async def create_payment_stripe(
             },
             'quantity': 1,
         }],
+        metadata=metadata,
         mode='payment',
         success_url=success_url,
         cancel_url=cancel_url,

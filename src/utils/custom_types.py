@@ -1,6 +1,6 @@
 from typing import Any, Optional
 
-from fastapi_storages.base import StorageImage
+from fastapi_storages.base import StorageImage, StorageFile
 from fastapi_storages.exceptions import ValidationException
 from fastapi_storages.integrations.sqlalchemy import FileType as _FileType
 from fastapi_storages.integrations.sqlalchemy import ImageType as _ImageType
@@ -19,6 +19,26 @@ storage = FileSystemStorage(path=STORAGE_DIR)
 class FileType(_FileType):
     def __init__(self, *args: Any, **kwargs: Any) -> None:
         super().__init__(storage=storage, *args, **kwargs)
+
+    def process_bind_param(self, value: Any, dialect: Dialect) -> Optional[str]:
+        if value is None:
+            return value
+        if len(value.file.read(1)) != 1:
+            return None
+        print(str(value.__dict__))
+        file = StorageFile(name=value.filename, storage=self.storage)
+        file.write(file=value.file)
+
+        value.file.close()
+        return file.name
+
+    def process_result_value(
+        self, value: Any, dialect: Dialect
+    ) -> Optional[StorageFile]:
+        if value is None:
+            return value
+
+        return StorageFile(name=value, storage=self.storage)
 
 
 class ImageType(_ImageType):

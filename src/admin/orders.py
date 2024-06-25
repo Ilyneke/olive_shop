@@ -17,6 +17,6 @@ class OrdersAdmin(ModelView, model=Orders):  # type: ignore
         Orders.created_at,
         Orders.modified_at,
     ]
-    column_formatters = {Orders.total_sum: lambda x: x / 100}
+    column_formatters = {Orders.total_sum: lambda m, a: m.total_sum / 100}
     page_size = 25
     page_size_options = [50, 100]

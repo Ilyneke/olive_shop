@@ -1,11 +1,12 @@
 from typing import Any, Optional
 
 from fastapi_storages.base import StorageImage
+from fastapi_storages.exceptions import ValidationException
 from fastapi_storages.integrations.sqlalchemy import FileType as _FileType
 from fastapi_storages.integrations.sqlalchemy import ImageType as _ImageType
 from fastapi_storages import FileSystemStorage
 from sqlalchemy.engine.interfaces import Dialect
-from PIL import Image
+from PIL import Image, UnidentifiedImageError
 
 from sqladmin import ModelView as _ModelView
 
@@ -23,6 +24,30 @@ class FileType(_FileType):
 class ImageType(_ImageType):
     def __init__(self, *args: Any, **kwargs: Any) -> None:
         super().__init__(storage=storage, *args, **kwargs)
+
+    def process_bind_param(self, value: Any, dialect: Dialect) -> Optional[str]:
+        if value is None:
+            return value
+        if len(value.file.read(1)) != 1:
+            return None
+
+        try:
+            image_file = Image.open(value.file)
+            image_file.verify()
+        except UnidentifiedImageError:
+            raise ValidationException("Invalid image file")
+
+        image = StorageImage(
+            name=value.filename,
+            storage=self.storage,
+            height=image_file.height,
+            width=image_file.width,
+        )
+        image.write(file=value.file)
+
+        image_file.close()
+        value.file.close()
+        return image.name
 
     def process_result_value(
         self, value: Any, dialect: Dialect

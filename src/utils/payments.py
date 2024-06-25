@@ -13,7 +13,7 @@ async def check_payment_stripe(_id: str):
             phone_number = payment.metadata.pop('phone')
             order = Orders()
             order.data = payment.metadata
-            order.phone = phone_number
+            order.phone = int(phone_number)
             order.email = payment.customer_email
             order.total_sum = payment.amount_total
             await insert_order_method(order_instance=order)

@@ -35,6 +35,7 @@ class ImageType(_ImageType):
                     name=value, storage=self.storage, height=image.height, width=image.width
                 )
         except BaseException as ee:
+            print(value)
             print('EXCEPTION:', str(ee))
             # return StorageImage(name=value, storage=self.storage, height=100, width=100)
 

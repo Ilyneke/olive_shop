@@ -36,7 +36,7 @@ class ImageType(_ImageType):
                 )
         except BaseException as ee:
             print('EXCEPTION:', str(ee))
-            return StorageImage(name=value, storage=self.storage, height=100, width=100)
+            # return StorageImage(name=value, storage=self.storage, height=100, width=100)
 
 
 class ModelView(_ModelView):
